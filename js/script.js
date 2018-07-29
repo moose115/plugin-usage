@@ -1,3 +1,14 @@
+var templateCar = document.getElementById('template-car-cell').innerHTML;
+
+Mustache.parse(templateCar);
+
+var cells = document.querySelectorAll('.carousel-cell');
+
+cells.forEach(function(item, index) {
+  item.innerHTML = Mustache.render(templateCar, carArray[index]);
+});
+
+
 var elem = document.querySelector('.carousel');
 var flkty = new Flickity( elem, {
   // options
