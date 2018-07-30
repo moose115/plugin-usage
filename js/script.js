@@ -30,14 +30,29 @@ flkty.on('scroll', function (progress) {
 });
 
 window.initMap = function () {
-  // The location of Uluru
-  var uluru = { lat: -25.344, lng: 131.036 };
   // The map, centered at Uluru
   var map = new google.maps.Map(
     document.getElementById('map'), { zoom: 4, center: carArray[0].coords });
-  // The marker, positioned at Uluru
-  carArray.forEach(function(element, index) {
+  // The marker asignment
+  carArray.forEach(function (element, index) {
+    // Here every marker get's his own coord
     var marker = new google.maps.Marker({ position: element.coords, map: map });
+    //This listener binds cell changing to markers
+    marker.addListener('click', function () {
+      //Cell change
+      isMarkerClicked = true;
+      flkty.select(index, true, false);
+      isMarkerClicked = false;
+    })
   });
-  
+
+  var isMarkerClicked; // Control var
+  flkty.on('change', function (index) {
+    if(!isMarkerClicked) {
+      map.panTo(carArray[index].coords);
+    }
+  });
+
 };
+
+
